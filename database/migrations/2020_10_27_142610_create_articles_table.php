@@ -20,12 +20,6 @@ class CreateArticlesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('task', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-
-            $table->timestamps();
-        });
     }
 
     /**
