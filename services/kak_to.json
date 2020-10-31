@@ -6,7 +6,7 @@
                 "max": 50,
                 "spare": 50
             },
-#		"root":"/Документы/API_TODO_LIST/",
+
             "root": "/var/www/laravelapp/public/",
             "index": "index.php",
             "script": "index.php",
@@ -16,7 +16,7 @@
         }
     },
     "listeners": {
-        "*:8080":{ 
+        "*:8080":{
 			 "pass": "applications/myrhostq"
 		}
     }

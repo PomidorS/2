@@ -2,13 +2,18 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ControllerFORbd;
+use App\Http\Controllers\ControllerFORTask;
+use App\Http\Controllers\ControllerForList;
 
 
-
-Route::post('/dela/output','ControllerFORbd@create_task');
-Route::get('dela/output/{id}','ControllerFORbd@output');
-Route::put('dela/output/{output}','ControllerFORbd@outputEdit');
-Route::delete('dela/output/{output}','ControllerFORbd@outputDelete');
-
+Route::group(['prefix'=>'work_with'], function (){
+    //роуты для списков
+    Route::get('/lists/output','ControllerForList@create_lists');
+    Route::delete('/lists/output','ControllerForList@outputDelete');
+    //роуты для дел
+    Route::post('/dela/output', 'ControllerFORTask@create_task');
+    Route::get('dela/output/{id}', 'ControllerFORTask@output');
+    Route::put('dela/output/{id}', 'ControllerFORTask@outputEdit');
+    Route::delete('dela/output/{id}', 'ControllerFORTask@outputDelete');
+});
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Lists extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -14,9 +14,8 @@ class Task extends Model
         'short_description',
         'stringency',
         'state_of_affairs'
-        ];
-    public function lists(){
-        return $this->hasOne('Lists');
+    ];
+    public function tasks(){
+        return $this->hasMany('Task');
     }
-
 }
