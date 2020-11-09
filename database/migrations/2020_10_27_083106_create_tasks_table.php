@@ -17,12 +17,13 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('task', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('short_description');
             $table->boolean('state_of_affairs');
-            $table->integer('task_id');
+            $table->integer('list_id')->unsigned()->default(1);
+            $table->foreign('list_id')->references('id')->on('lists');
             $table->timestamps();
         });
 
@@ -35,7 +36,7 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        Schema::drop('task');
+        Schema::drop('tasks');
 
     }
 }
