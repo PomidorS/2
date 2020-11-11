@@ -23,18 +23,19 @@ class User extends Authenticatable
         'password'
     ];
 
-    protected $rules = array(
+    protected array $rules = array(
         'email' => 'required|string|email|unique:users',
         'password' => 'required|string|min:6'
     );
 
-    public function validate($params)
+
+    public function validate($parametr)
     {
-        $validator = Validator::make($params, $this->rules);
+        $validator = Validator::make($parametr, $this->rules);
         if ($validator->passes()) {
             return true;
         }
-        $this->errors = $validator->messages();
+        $this->error = $validator->messages();
         return false;
     }
 }

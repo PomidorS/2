@@ -4,10 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Validator;
 class Task extends Model
 {
     use HasFactory;
+
+    protected $table = 'tasks';
+
+    protected $rules = array(
+        'name' => 'required',
+        'stringency' => 'integer|between:1,5',
+        'state_of_affairs' => 'boolean'
+    );
+
     protected $fillable = [
         'id',
         'name',
@@ -15,8 +24,17 @@ class Task extends Model
         'stringency',
         'state_of_affairs'
         ];
-    public function lists(){
-        return $this->hasOne('Lists');
+
+    public function validate($parametr){
+        $validator = Validator::make($parametr, $this->rules);
+        if ($validator->passes()){
+            return true;
+        }
+        $this->error = $validator->messages();
+    }
+
+    public function List1(){
+        return $this->belongsTo(List1::class);
     }
 
 }

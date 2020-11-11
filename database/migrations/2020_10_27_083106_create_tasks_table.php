@@ -21,9 +21,10 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('short_description');
-            $table->boolean('state_of_affairs');
-            $table->integer('list_id')->unsigned()->default(1);
-            $table->foreign('list_id')->references('id')->on('lists');
+            $table->integer('stringency')->nullable();
+            $table->boolean('state_of_affairs')->default('false');
+            $table->integer('list_id')->unsigned();
+            $table->foreign('list_id')->references('id')->on('lists')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -36,7 +37,7 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tasks');
+        Schema::dropIfExists('tasks');
 
     }
 }
