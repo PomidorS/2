@@ -4,13 +4,13 @@ namespace App\Filter;
 
 class QueryFilter
 {
-    protected $create;
-    protected $req;
+    protected $builder;
+    protected $request;
 
-    public function __construct($create, $req)
+    public function __construct($builder, $request)
     {
-        $this->create = $create;
-        $this->req = $req;
+        $this->builder = $builder;
+        $this->request = $request;
     }
 
     public function apply()
@@ -23,11 +23,11 @@ class QueryFilter
                 $this->$filter($value);
             }
         }
-        return $this->create;
+        return $this->builder;
     }
 
     protected function filters()
     {
-        return $this->req->all();
+        return $this->request->all();
     }
 }

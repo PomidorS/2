@@ -31,7 +31,7 @@ class List1 extends Model
         return false;
     }
 
-    public function Task(){
+    public function task() {
         return $this->hasMany(Task::class);
     }
 }

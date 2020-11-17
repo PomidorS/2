@@ -6,22 +6,30 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function register(Request $req)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
     {
         $user = new User();
-        if (!$user->validate($req->all())) {
+        if (!$user->validate($request->all())) {
             return response()->json($user->error, 400);
         }
         User::create([
-            'email' => $req->input('email'),
-            'password' => bcrypt($req->input('password'))
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password'))
         ]);
         return response()->json(['message' => 'You are were registered successfully'], 201);
     }
 
-    public function login(Request $req)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function login(Request $request)
     {
-        $credentials = $req->only('email', 'password');
+        $credentials = $request->only('email', 'password');
         if (!auth()->attempt($credentials)) {
             return response()->json('Invalid email or password', 401);
         }
@@ -29,9 +37,13 @@ class AuthController extends Controller
         return response()->json(['accessToken' => $token], 200);
     }
 
-    public function logout(Request $req)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(Request $request)
     {
-        $req->user()->token()->revoke();
+        $request->user()->token()->revoke();
         return response()->json(['message' => 'You are logged out'], 200);
     }
 }
