@@ -81,7 +81,7 @@ class TaskController extends Controller
             return response() -> json(['message' => 'state_of_affairs field is boolean'], 400);
         }
         $result -> state_of_affairs = $status;
-        $result->(save);
+        $result->save();
         return response() -> json('nice', 200);
     }
 }

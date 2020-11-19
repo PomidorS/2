@@ -35,10 +35,12 @@ class ListController extends Controller
         if ($result && $min_tasksCountPerPage < $result && $max_tasksCountPerPage > $result) {
             $tasksCountPerPage = (int)$request->input('out');
         }
-        else $tasksCountPerPage = 10;
+        else {
+            $tasksCountPerPage = 10;
+        }
         $list = List::findOrFail((int)$id);
         $builder = $list->task->sortBy($request->input('sort_by'));
-        $tasks = (new ListsFilter($builder,$request))->apply()->take($tasksCountPerPage);
+        $tasks = (new ListsFilter($builder, $request))->apply()->take($tasksCountPerPage);
         $list->toArray();
         $list['tasks'] = $tasks->values()->all();
         $arrayOut = array(
