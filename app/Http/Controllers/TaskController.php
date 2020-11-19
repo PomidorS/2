@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use App\Models\List1;
+use App\Models\List;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class TaskController extends Controller
         if (!$task -> validate($request -> all())) {
             return response() -> json($task -> error , 400);
         }
-        $list = List1::findOrFail((int) $id);
+        $list = List::findOrFail((int) $id);
         $task = $list -> tasks() -> create($request -> all());
         return response() -> json(Task::find($task['id']), 201);
     }
@@ -81,7 +81,7 @@ class TaskController extends Controller
             return response() -> json(['message' => 'state_of_affairs field is boolean'], 400);
         }
         $result -> state_of_affairs = $status;
-        $result -> save;
+        $result->(save);
         return response() -> json('nice', 200);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\List1;
+use App\Models\List;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,8 +16,8 @@ class ListController extends Controller
      */
     public function outputLists(Request $request)
     {
-        $builder = List1::all()->sortBy($request->input('sort_by'));
-        $list = (new List1($builder, $request))->apply();
+        $builder = List::all()->sortBy($request->input('sort_by'));
+        $list = (new List($builder, $request))->apply();
         return response()->json($list->values()->all(), 200);
     }
     /**
@@ -28,15 +28,17 @@ class ListController extends Controller
      */
     public function output(Request $request, $id)
     {
-        $max_out = 101;
-        $min_out = 0;
+        $max_tasksCountPerPage = 101;
+        $min_tasksCountPerPage = 0;
+
         $result = $request->input('out');
-        if ($result && $min_out < $result && $max_out > $result) {
-            $out = (int)$request->input('out');
+        if ($result && $min_tasksCountPerPage < $result && $max_tasksCountPerPage > $result) {
+            $tasksCountPerPage = (int)$request->input('out');
         }
-        $list = List1::findOrFail((int)$id);
-        $builder = $list->Task->sortBy($request->input('sort_by'));
-        $tasks = (new ListsFilter($builder,$request))->apply()->take($out);
+        else $tasksCountPerPage = 10;
+        $list = List::findOrFail((int)$id);
+        $builder = $list->task->sortBy($request->input('sort_by'));
+        $tasks = (new ListsFilter($builder,$request))->apply()->take($tasksCountPerPage);
         $list->toArray();
         $list['tasks'] = $tasks->values()->all();
         $arrayOut = array(
@@ -52,11 +54,11 @@ class ListController extends Controller
      */
     public function create_lists(Request $request)
     {
-        $Lists = new List1();
+        $Lists = new List();
         if (!$Lists->validate($request->all())) {
             return response()->json($Lists->error,200);
         }
-        $Lists = List1::create($request->all());
+        $Lists = List::create($request->all());
         return response()->json($Lists, 201);
     }
 
@@ -67,7 +69,7 @@ class ListController extends Controller
      */
     public function outputDelete($id)
     {
-        $result = List1::findOrFail((int)$id);
+        $result = List::findOrFail((int)$id);
         $result->delete();
         return response()->json('',200);
     }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 
-class List1 extends Model
+class List extends Model
 {
     use HasFactory;
 
@@ -17,13 +17,18 @@ class List1 extends Model
         'id',
         'name'
     ];
+
     protected $rules = array(
         'name' => 'required'
     );
 
-    public function validate($parametr)
+    /**
+     * @param $parameters
+     * @return bool
+     */
+    public function validate($parameters)
     {
-        $validator = Validator::make($parametr, $this->rules);
+        $validator = Validator::make($parameters, $this->rules);
         if ($validator->passes()) {
             return true;
         }
@@ -31,7 +36,8 @@ class List1 extends Model
         return false;
     }
 
-    public function task() {
+    public function task()
+    {
         return $this->hasMany(Task::class);
     }
 }

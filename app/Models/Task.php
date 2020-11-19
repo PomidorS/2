@@ -25,7 +25,8 @@ class Task extends Model
         'state_of_affairs'
         ];
 
-    public function validate($parametr) {
+    public function validate($parametr)
+    {
         $validator = Validator::make($parametr, $this->rules);
         if ($validator->passes()) {
             return true;
@@ -33,7 +34,8 @@ class Task extends Model
         $this->error = $validator->messages();
     }
 
-    public function list1() {
+    public function list1()
+    {
         return $this -> belongsTo(List1::class);
     }
 
