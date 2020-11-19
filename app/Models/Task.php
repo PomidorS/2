@@ -34,9 +34,9 @@ class Task extends Model
         $this->error = $validator->messages();
     }
 
-    public function list1()
+    public function list()
     {
-        return $this -> belongsTo(List1::class);
+        return $this -> belongsTo(List::class);
     }
 
 }
