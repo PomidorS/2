@@ -20,12 +20,12 @@ class TaskController extends Controller
     public function create_task($id, Request $request)
     {
         $task = new Task();
-        if (!$task -> validate($request -> all())) {
-            return response() -> json($task -> error , 400);
+        if (!$task->validate($request->all())) {
+            return response()->json($task->error , 400);
         }
         $list = List::findOrFail((int) $id);
-        $task = $list -> tasks() -> create($request -> all());
-        return response() -> json(Task::find($task['id']), 201);
+        $task = $list->tasks()->create($request->all());
+        return response()->json(Task::find($task['id']), 201);
     }
 
     /**
@@ -36,7 +36,7 @@ class TaskController extends Controller
      public function output($id)
      {
         $result = Task::findOrFail((int) $id);
-        return response() -> json($result,200);
+        return response()->json($result,200);
      }
 
     /**
@@ -48,10 +48,10 @@ class TaskController extends Controller
     public function outputEdit(Request $request, $id)
     {
         $result = Task::findOrFail((int) $id);
-        if (!$result -> validate($request->all())) {
+        if (!$result->validate($request->all())) {
             return response()->json($result->error, 400);
         }
-        $result -> update($request -> all());
+        $result->update($request->all());
         return response()->json($result, 201);
     }
 
@@ -63,8 +63,8 @@ class TaskController extends Controller
     public function outputDelete($id)
     {
         $result = Task::findOrFail((int) $id);
-        $result -> delete();
-        return response() -> json('', 200);
+        $result->delete();
+        return response()->json('', 200);
     }
 
     /**
@@ -76,13 +76,13 @@ class TaskController extends Controller
     public function state_of_affairs($id, Request $request)
     {
         $result = Task::findOrFail((int) $id);
-        $status = $request -> input('state_of_affairs');
+        $status = $request->input('state_of_affairs');
         if ($status != 'false' && $status != 'true') {
-            return response() -> json(['message' => 'state_of_affairs field is boolean'], 400);
+            return response()->json(['message' => 'state_of_affairs field is boolean'], 400);
         }
-        $result -> state_of_affairs = $status;
+        $result->state_of_affairs = $status;
         $result->save();
-        return response() -> json('nice', 200);
+        return response()->json('nice', 200);
     }
 }
 

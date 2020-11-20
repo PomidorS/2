@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function register(Request $request)
     {
@@ -25,7 +26,7 @@ class AuthController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function login(Request $request)
     {
@@ -39,7 +40,7 @@ class AuthController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function logout(Request $request)
     {

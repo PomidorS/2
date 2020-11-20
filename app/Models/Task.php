@@ -36,7 +36,7 @@ class Task extends Model
 
     public function list()
     {
-        return $this -> belongsTo(List::class);
+        return $this->belongsTo(List::class);
     }
 
 }
